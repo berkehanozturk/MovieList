@@ -17,7 +17,7 @@ public class MultiTarget {
     
     var defaultSession = URLSession(configuration: .default)
 
-    func objectRequest<T: Decodable>(completion : @escaping(Swift.Result<T,Error>) -> () ){
+    func objectRequest<T: Decodable>(completion : @escaping(Swift.Result<T,Error>) -> ()) {
 
         do {
             let request =  try self.asURLRequest()

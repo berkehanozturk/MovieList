@@ -7,15 +7,15 @@
 
 import Foundation
 protocol PopularMovieResource {
-    func getPopularMovies(completion: @escaping (Swift.Result<MovieModal?,Error>) -> Void)
+    func getPopularMovies(page:Int,completion: @escaping (Swift.Result<MovieModal?,Error>) -> Void)
 
 }
 
 struct PopularMovieResourceImpl: PopularMovieResource {
     let network = MovieNetwork()
 
-    func getPopularMovies(completion: @escaping (Result<MovieModal?, Error>) -> Void) {
-        let target = MultiTarget(TheMovieTarget.getPopularMovie)
+    func getPopularMovies(page:Int,completion: @escaping (Result<MovieModal?, Error>) -> Void) {
+        let target = MultiTarget(TheMovieTarget.getPopularMovie(page: page))
         
         network.performObjectRequest(target: target) { (response) in
             completion(response)

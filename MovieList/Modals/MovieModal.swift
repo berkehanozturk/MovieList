@@ -19,12 +19,13 @@ struct Results: Codable {
     var voteCount: Int?
     var posterPath: String?
     var title: String?
-
+    var overView: String?
     enum CodingKeys: String, CodingKey  {
         case voteCount  = "vote_count"
         case id = "id"
         case posterPath = "poster_path"
-        case title 
+        case title
+        case overView = "overview"
     }
     
 }

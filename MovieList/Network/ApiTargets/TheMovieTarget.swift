@@ -8,7 +8,7 @@
 import Foundation
 
 enum TheMovieTarget: ApiTarget {
-    case getPopularMovie
+    case getPopularMovie(page:Int)
     
     var baseUrl: String {
         switch self {
@@ -26,8 +26,8 @@ enum TheMovieTarget: ApiTarget {
     }
     var parameters: Codable? {
         switch self {
-        case .getPopularMovie:
-            return ["api_key":"\(NetworkConstants.APIParameterKey.ApiKey)"]
+        case .getPopularMovie(let page):
+            return ["api_key":"\(NetworkConstants.APIParameterKey.ApiKey)","page":"\(page)"]
     
         }
     }
