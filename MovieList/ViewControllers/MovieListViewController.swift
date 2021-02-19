@@ -16,56 +16,66 @@ class MovieListViewController: BaseViewController {
     var rightButtonTapped = false
     var pageCount = 1
     var isLoading: Bool = false
-    var itemSize: NSCollectionLayoutSize?
+    var itemSize: NSCollectionLayoutSize!
     private let MovieResource: PopularMovieResource = PopularMovieResourceImpl()
-    var movieResultArray = [Results]()
     var movieList = [Movie]()
     var filteredMovies = [Movie]()
     var loadMoreButton = UIButton()
+    var selectedMovie: Movie?
     override func viewDidLoad() {
         super.viewDidLoad()
       
         fetchPopularMovies()
+        setupUIElements()
+        customizeNavBar()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        fetchFavoriteMovies()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+            
+        }
+    }
+
+    private func setupUIElements() {
+        searchBar.delegate = self
+        registerForKeyboardNotifications(bottomConstraint: collectionViewbottomConstraint)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(MovieCell.self)
         collectionView.register(FooterCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterCollectionReusableView.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.collectionViewLayout = layout(isGrid: false)
-        customizeNavBar()
-        searchBar.delegate = self
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        registerForKeyboardNotifications(bottomConstraint: collectionViewbottomConstraint)
+        collectionView.collectionViewLayout = setupLayout(isGrid: false)
     }
     
-   
-    private func layout(isGrid: Bool) -> UICollectionViewCompositionalLayout {
+    private func setupLayout(isGrid: Bool) -> UICollectionViewCompositionalLayout {
       let layout = UICollectionViewCompositionalLayout { sectionIndex, environment -> NSCollectionLayoutSection? in
         var itemCount = 1
-        if isGrid == true{
+        if isGrid == true { // this controls appearance of collectionView
+
             itemCount = 2
         }
        
         self.itemSize = NSCollectionLayoutSize (
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(0.5)
-          )
-        var item = NSCollectionLayoutItem(layoutSize: self.itemSize!)
+            heightDimension: .fractionalHeight(0.5)          )
+        var item = NSCollectionLayoutItem(layoutSize: self.itemSize)
         
         let groupSize = NSCollectionLayoutSize (
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(400)
           )
         
-        if environment.container.contentSize.width > 500 {
-            if isGrid == false{
+        if environment.container.contentSize.width > 700 { // if screen width is greater than 700 user rotated to the land scape mod
+            if isGrid == false { //  landscape mod is turned and grid look is false  change the item size
                 self.itemSize = NSCollectionLayoutSize (
                                     widthDimension: .fractionalWidth(1.0),
                                       heightDimension: .fractionalHeight(0.8)
                                   )
-                item = NSCollectionLayoutItem(layoutSize: self.itemSize!)
+                item = NSCollectionLayoutItem(layoutSize: self.itemSize)
             }
         }else {
-            item = NSCollectionLayoutItem(layoutSize: self.itemSize!)
+            item = NSCollectionLayoutItem(layoutSize: self.itemSize)
 
         }
     
@@ -91,38 +101,28 @@ class MovieListViewController: BaseViewController {
            layout.configuration = config
            return layout
     }
-    
-    func  getSectionAcordingToScreenSize(groupSize: NSCollectionLayoutSize,item: NSCollectionLayoutItem,itemCount: Int) -> NSCollectionLayoutSection{
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: itemCount)
-        if itemCount > 1 {
-                  group.contentInsets.leading = 5
-                  group.contentInsets.trailing = 5
-                }
-        group.interItemSpacing = .fixed(10)
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 10
-        section.contentInsets.top = 10
-   
-
-        return section
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segues.toDetailVc.rawValue{
+            if let detailVc = segue.destination as? DetailViewController {
+                detailVc.selectedMovie = selectedMovie
+                  }
+        }
     }
  
     private func customizeNavBar() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+
         let rightButton  = MyBarButtonItem(buttonIconName: Assets.list.rawValue)
         rightButton.setNavbarButtonAction {
-            print(self.rightButtonTapped)
             if self.rightButtonTapped == true {
                 rightButton.setButtonIcon(iconName: Assets.list.rawValue)
                 self.rightButtonTapped.toggle()
-                self.collectionView.collectionViewLayout = self.layout(isGrid: false)
-
+                self.collectionView.collectionViewLayout = self.setupLayout(isGrid: false)
             }
             else{
                 rightButton.setButtonIcon(iconName: Assets.table.rawValue)
-                self.collectionView.collectionViewLayout = self.layout(isGrid: true)
+                self.collectionView.collectionViewLayout = self.setupLayout(isGrid: true)
                 self.rightButtonTapped.toggle()
-
             }
             
         }
@@ -138,26 +138,28 @@ class MovieListViewController: BaseViewController {
         MovieResource.getPopularMovies(page: pageCount) { (dataResponse) in
             switch dataResponse {
             case .success(let movieResults):
-                if let unWrappedMovieResults = movieResults {
-                    if unWrappedMovieResults.results != nil {
-                        self.movieResultArray = unWrappedMovieResults.results!
-                        for movieResult in self.movieResultArray {
-                            if let moviePoster = movieResult.posterPath {
-                                let movieUrl = GetPoster.getPosterUrl(width: 300, posterString: moviePoster)
-                                let movie = Movie(movieTitle: movieResult.title , movieImageUrl: movieUrl, movieVoteCount: movieResult.voteCount, movieOverView: movieResult.overView)
-                                self.movieList.append(movie)
-                            }
-                        }
-                        self.filteredMovies = self.movieList
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
-                        }
-                    }
+                if  let movieResult =  movieResults.results?.changePostersToFullUrl(){
+                    self.movieList.append(contentsOf: movieResult)
+                    self.filteredMovies = self.movieList
+                    DispatchQueue.main.async {
+                                             self.collectionView.reloadData()
+                                          }
                 }
+             
+              
+            
             case .failure(_):
-                break
+                DispatchQueue.main.async {
+                    self.showAlert(message: "Somethink went wrong!")
+                }
+                
                 
             }
+        }
+    }
+    private func fetchFavoriteMovies() {
+        if let persistedMovies = GlobalVariables.favouriteMovies.fetchFavourites() {
+            GlobalVariables.favouriteMovies = persistedMovies
         }
     }
     
@@ -169,8 +171,15 @@ extension MovieListViewController: UICollectionViewDataSource,UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell :MovieCell = collectionView.dequeueReusableCell(for: indexPath)
+        filteredMovies[indexPath.item].isFavourite =  filteredMovies[indexPath.item].isFavouriteMovie()
         cell.movie = filteredMovies[indexPath.item]
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedMovie = filteredMovies[indexPath.item]
+        self.performSegue(withIdentifier: Segues.toDetailVc.rawValue, sender: nil)
+
+        
     }
  
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -184,9 +193,7 @@ extension MovieListViewController: UICollectionViewDataSource,UICollectionViewDe
         }
         return UICollectionReusableView()
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
-    }
+  
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: 50, height: 50)
     }
@@ -221,9 +228,6 @@ extension MovieListViewController: UISearchBarDelegate {
             if !filtered.isEmpty {
                 self.filteredMovies = filtered
             }
-           
-            
-          
         }
         DispatchQueue.main.async {
             self.collectionView.reloadData()

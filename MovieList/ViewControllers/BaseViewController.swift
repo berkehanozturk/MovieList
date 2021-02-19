@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class BaseViewController: UIViewController{
+class BaseViewController: UIViewController,Alertable{
     
 var bottomConstraintForKeyboard: NSLayoutConstraint?
 

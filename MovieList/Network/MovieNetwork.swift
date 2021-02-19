@@ -9,7 +9,7 @@ import Foundation
 
 class MovieNetwork {
 
-    func performObjectRequest<T:Decodable>(target: MultiTarget, completion: @escaping(Swift.Result<T,Error>) -> Void) {
+    func performObjectRequest<T:Decodable>(target: MultiTarget, completion: @escaping(NetworkResponse<T>) -> Void) {
         target.objectRequest(completion: completion)
         
     }

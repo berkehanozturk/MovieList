@@ -20,23 +20,35 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pAH-FR-sFJ">
                         <rect key="frame" x="0.0" y="0.0" width="287" height="187"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEk-Gy-NZ6">
-                        <rect key="frame" x="252" y="5" width="25" height="25"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" image="star" catalog="system"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEk-Gy-NZ6">
+                        <rect key="frame" x="227" y="5" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Bc1-Hs-U3f"/>
+                            <constraint firstAttribute="width" constant="50" id="bxB-Ge-EZG"/>
+                        </constraints>
+                        <state key="normal" image="star.fill" catalog="system"/>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="MmL-A5-2BZ">
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmL-A5-2BZ">
                         <rect key="frame" x="0.0" y="163" width="287" height="24"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                        <color key="textColor" systemColor="systemBackgroundColor"/>
+                        <attributedString key="attributedText">
+                            <fragment content="Label">
+                                <attributes>
+                                    <color key="NSColor" systemColor="systemBackgroundColor"/>
+                                    <font key="NSFont" metaFont="system" size="20"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="5" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="FEk-Gy-NZ6" secondAttribute="trailing" constant="10" id="91a-rB-dPN"/>
                 <constraint firstAttribute="bottom" secondItem="MmL-A5-2BZ" secondAttribute="bottom" id="EP9-sj-XVM"/>
+                <constraint firstItem="FEk-Gy-NZ6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="FG8-v4-hBb"/>
                 <constraint firstItem="MmL-A5-2BZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Gn7-Ny-8sD"/>
                 <constraint firstItem="pAH-FR-sFJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Ihv-yL-d8a"/>
                 <constraint firstAttribute="bottom" secondItem="pAH-FR-sFJ" secondAttribute="bottom" id="aAr-bq-MfJ"/>
@@ -54,7 +66,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -6,7 +6,14 @@
 //
 
 import Foundation
-
+enum NetworkResponse<T> {
+  case success(T)
+  case failure(NetworkError)
+}
+enum NetworkError {
+    case unknown
+    case noJSONData
+  }
 public class MultiTarget {
     var requestTimeout_second = 15.0
     var target : ApiTarget?
@@ -17,14 +24,14 @@ public class MultiTarget {
     
     var defaultSession = URLSession(configuration: .default)
 
-    func objectRequest<T: Decodable>(completion : @escaping(Swift.Result<T,Error>) -> ()) {
+    func objectRequest<T: Decodable>(completion : @escaping(NetworkResponse<T>) -> ()) {
 
-        do {
+        do{
             let request =  try self.asURLRequest()
             let task = defaultSession.dataTask(with: request) { (data, response, err) in
-                guard let data = data else { return }
-                let result = Result {  try JSONDecoder().decode(T.self, from: data)  }
-                completion(result)
+                let httpResponse = response as? HTTPURLResponse
+                self.handleDataResponse(data: data, response: httpResponse, error: err, completion: completion) // 4
+                
             }
             task.resume()
 
@@ -36,9 +43,20 @@ public class MultiTarget {
     }
     
 }
-
 extension MultiTarget  {
-    
+    private func handleDataResponse<T: Decodable>(data: Data?, response: HTTPURLResponse?, error: Error?, completion: (NetworkResponse<T>) -> ()) {
+        guard error == nil else { return completion(.failure(.unknown)) }
+        guard let response = response else { return completion(.failure(.noJSONData)) }
+
+        switch response.statusCode { // 3
+        case 200...299:
+            guard let data = data, let model = try? JSONDecoder().decode(T.self, from: data) else { return completion(.failure(.unknown)) } // 4
+            completion(.success(model))
+        default:
+            completion(.failure(.unknown))
+        }
+    }
+
     public func asURLRequest() throws -> URLRequest {
         let url =  URL(string: target!.baseUrl)
         var urlRequest = URLRequest.init(url: url!.appendingPathComponent(target!.path))
@@ -53,7 +71,6 @@ extension MultiTarget  {
                     let parametredString = urlRequest.url?.url(with: target!.baseUrl, path: target!.path, parameters: parameters as? [String : Any] ?? ["":""])
                     let parametredUrl = URL(string: parametredString!)
                     urlRequest = URLRequest(url: ((parametredUrl ?? urlRequest.url) ?? url)!)
-                  
                     
                 case .post:
                 

@@ -7,7 +7,7 @@
 
 import Foundation
 class GetPoster {
-    static func getPosterUrl(width: Int,posterString: String)-> URL? {
+    static func getPosterUrl(width: Int,posterString: URL)-> URL? {
         
         let urlString = "\(NetworkConstants.createImageUrl)/w\(width)\(posterString)"
         guard let url = URL(string: urlString) else { return nil  }
