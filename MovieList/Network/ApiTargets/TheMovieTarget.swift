@@ -31,13 +31,7 @@ enum TheMovieTarget: ApiTarget {
     
         }
     }
-    var displayLoader: Bool {
-        switch self {
-        case .getPopularMovie:
-            return true
-     
-        }
-    }
+   
     var method: RequestHTTPMethod{
         switch self {
         case .getPopularMovie:

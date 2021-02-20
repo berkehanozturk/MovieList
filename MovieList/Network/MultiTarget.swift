@@ -30,7 +30,7 @@ public class MultiTarget {
             let request =  try self.asURLRequest()
             let task = defaultSession.dataTask(with: request) { (data, response, err) in
                 let httpResponse = response as? HTTPURLResponse
-                self.handleDataResponse(data: data, response: httpResponse, error: err, completion: completion) // 4
+                self.handleDataResponse(data: data, response: httpResponse, error: err, completion: completion) 
                 
             }
             task.resume()
@@ -48,9 +48,9 @@ extension MultiTarget  {
         guard error == nil else { return completion(.failure(.unknown)) }
         guard let response = response else { return completion(.failure(.noJSONData)) }
 
-        switch response.statusCode { // 3
+        switch response.statusCode {
         case 200...299:
-            guard let data = data, let model = try? JSONDecoder().decode(T.self, from: data) else { return completion(.failure(.unknown)) } // 4
+            guard let data = data, let model = try? JSONDecoder().decode(T.self, from: data) else { return completion(.failure(.unknown)) }
             completion(.success(model))
         default:
             completion(.failure(.unknown))

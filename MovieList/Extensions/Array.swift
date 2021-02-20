@@ -32,16 +32,7 @@ extension Array where Element == Movie {
             return nil
         }
     }
-    func changePostersToFullUrl() -> [Movie]  {
-        var movieArrayHolder = [Movie]()
-        for var movie in self {
-            movie.posterPath = GetPoster.getPosterUrl(width: 300, posterString: movie.posterPath!)
-            movieArrayHolder.append(movie)
-        }
-        return movieArrayHolder
-        
-    }
-
+ 
 
 }
 

@@ -10,24 +10,19 @@ import XCTest
 
 class MovieListTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testGettingUrl() {
+        let testMovie = Movie(movieTitle: "Lotr", movieImageUrl: URL(string: "someUrl"), movieVoteCount: 200, movieOverView: "frodo is a good  person to take the risk", movieIsFavourite: false, MovieId: 1)
+        let result = testMovie.isFavouriteMovie()
+         XCTAssertFalse(result)
+        let urlResult = GetPoster.getPosterUrl(width: 200, posterString: testMovie.posterPath!)
+        XCTAssertEqual(urlResult, URL(string: "https://image.tmdb.org/t/p/w200someUrl"))
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func test_API_BaseURLString_IsCorrect() {
+        let baseURLString = NetworkConstants.baseUrl
+           let expectedBaseURLString = "https://api.themoviedb.org/3"
+           XCTAssertEqual(baseURLString, expectedBaseURLString, "Base URL does not match expected base URL. Expected base URLs to match.")
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+    
+  
 
 }

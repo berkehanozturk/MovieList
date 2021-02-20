@@ -36,8 +36,6 @@
 		6F9BF78025DED74B0006D9C7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9BF77F25DED74B0006D9C7 /* Constants.swift */; };
 		6F9BF78825DEDED10006D9C7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9BF78725DEDED10006D9C7 /* BaseViewController.swift */; };
 		6F9DB37425DFC790001E7AA1 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB37325DFC790001E7AA1 /* Alertable.swift */; };
-		6F9DB37925DFD07A001E7AA1 /* ResponseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB37825DFD07A001E7AA1 /* ResponseModal.swift */; };
-		6F9DB37E25DFD2A5001E7AA1 /* ErrorModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB37D25DFD2A5001E7AA1 /* ErrorModal.swift */; };
 		6F9DB38625DFE465001E7AA1 /* DetailScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F9DB38525DFE465001E7AA1 /* DetailScreen.storyboard */; };
 		6F9DB38B25DFE6FE001E7AA1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB38A25DFE6FE001E7AA1 /* DetailViewController.swift */; };
 		6F9DB39025E001AB001E7AA1 /* globalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB38F25E001AB001E7AA1 /* globalVariables.swift */; };
@@ -97,8 +95,6 @@
 		6F9BF77F25DED74B0006D9C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6F9BF78725DEDED10006D9C7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6F9DB37325DFC790001E7AA1 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
-		6F9DB37825DFD07A001E7AA1 /* ResponseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModal.swift; sourceTree = "<group>"; };
-		6F9DB37D25DFD2A5001E7AA1 /* ErrorModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModal.swift; sourceTree = "<group>"; };
 		6F9DB38525DFE465001E7AA1 /* DetailScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailScreen.storyboard; sourceTree = "<group>"; };
 		6F9DB38A25DFE6FE001E7AA1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		6F9DB38F25E001AB001E7AA1 /* globalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalVariables.swift; sourceTree = "<group>"; };
@@ -225,7 +221,6 @@
 			children = (
 				6F27349325DD4B3100C7307B /* MovieModal.swift */,
 				6F2734D625DD7A4A00C7307B /* Cells */,
-				6F9DB37825DFD07A001E7AA1 /* ResponseModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -282,7 +277,6 @@
 			children = (
 				6F9BF75A25DE6A6C0006D9C7 /* MovieCell.swift */,
 				6F9BF75B25DE6A6C0006D9C7 /* MovieCell.xib */,
-				6F9DB37D25DFD2A5001E7AA1 /* ErrorModal.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -459,9 +453,7 @@
 				6F9BF74325DE68E40006D9C7 /* NibLoadedView.swift in Sources */,
 				6F27348925DD49B000C7307B /* PopularMovieResourceImpl.swift in Sources */,
 				6F2734A925DD4DC500C7307B /* MultiTarget.swift in Sources */,
-				6F9DB37E25DFD2A5001E7AA1 /* ErrorModal.swift in Sources */,
 				6F27347C25DD417900C7307B /* ApiTarget.swift in Sources */,
-				6F9DB37925DFD07A001E7AA1 /* ResponseModal.swift in Sources */,
 				6F9DB39025E001AB001E7AA1 /* globalVariables.swift in Sources */,
 				6F9DB39525E00328001E7AA1 /* Array.swift in Sources */,
 				6F2734C625DD75D900C7307B /* GetPoster.swift in Sources */,

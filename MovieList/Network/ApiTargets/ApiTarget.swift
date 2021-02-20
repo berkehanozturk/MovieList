@@ -14,6 +14,5 @@ enum RequestHTTPMethod: String {
     var baseUrl: String{get}
     var path: String{get}
     var parameters: Codable? {get}
-    var displayLoader: Bool{get}
     var method: RequestHTTPMethod{get}
 }

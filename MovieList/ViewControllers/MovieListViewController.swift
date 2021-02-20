@@ -22,6 +22,7 @@ class MovieListViewController: BaseViewController {
     var filteredMovies = [Movie]()
     var loadMoreButton = UIButton()
     var selectedMovie: Movie?
+    var hideFooter: Bool = true //or false to not hide the header
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -138,16 +139,11 @@ class MovieListViewController: BaseViewController {
         MovieResource.getPopularMovies(page: pageCount) { (dataResponse) in
             switch dataResponse {
             case .success(let movieResults):
-                if  let movieResult =  movieResults.results?.changePostersToFullUrl(){
-                    self.movieList.append(contentsOf: movieResult)
-                    self.filteredMovies = self.movieList
+                self.movieList.append(contentsOf: movieResults.results!)
+                self.filteredMovies = self.movieList
                     DispatchQueue.main.async {
-                                             self.collectionView.reloadData()
-                                          }
-                }
-             
-              
-            
+                            self.collectionView.reloadData()
+                    }
             case .failure(_):
                 DispatchQueue.main.async {
                     self.showAlert(message: "Somethink went wrong!")
@@ -188,6 +184,12 @@ extension MovieListViewController: UICollectionViewDataSource,UICollectionViewDe
             for views in footer.subviews  where views is UIButton{
                 loadMoreButton = views as! UIButton
                 loadMoreButton.addTarget(self, action: #selector(loadMore), for: .touchUpInside)
+                if filteredMovies.count < 20 {
+                    loadMoreButton.isHidden = true
+                }else{
+                    loadMoreButton.isHidden = false
+
+                }
             }
             return footer
         }
@@ -195,8 +197,11 @@ extension MovieListViewController: UICollectionViewDataSource,UICollectionViewDe
     }
   
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
         return CGSize(width: 50, height: 50)
     }
+    
+    
 }
 
 extension MovieListViewController: UISearchBarDelegate {
@@ -204,6 +209,7 @@ extension MovieListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload), object: nil)
         self.perform(#selector(self.reload), with: nil, afterDelay: 0.5)
+        loadMoreButton.isHidden = true
     }
   
     

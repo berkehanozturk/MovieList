@@ -12,6 +12,7 @@ class MovieCell: UICollectionViewCell, NibLoadableView, ReusableView {
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var starButton: UIButton!
     @IBOutlet weak var movieTitleLabel: UILabel!
+    @IBOutlet weak var containerViewForLabels: UIView!
     var movie: Movie? {
         didSet{
             setData(movie: movie)
@@ -39,11 +40,15 @@ class MovieCell: UICollectionViewCell, NibLoadableView, ReusableView {
     }
     func setData(movie: Movie?) {
         setupStars()
+        movieImageView.layer.cornerRadius = 5
+        containerViewForLabels.layer.cornerRadius = 5
         prepareForReuse()
         movieTitleLabel.text = movie?.title
         if let movieImageUrl = movie?.posterPath {
+            if   let fullPosterUrl =  GetPoster.getPosterUrl(width: 300, posterString: movieImageUrl){
+                movieImageView.setRemoteImage(from: fullPosterUrl)
 
-            movieImageView.setRemoteImage(from: movieImageUrl)
+            }
         }
     }
     

@@ -29,6 +29,7 @@ struct Movie: Codable {
         case title
         case overView = "overview"
     }
+   
     init(movieTitle: String?, movieImageUrl: URL?, movieVoteCount: Int?, movieOverView: String?, movieIsFavourite: Bool? = false,MovieId : Int?) {
         title = movieTitle
         posterPath = movieImageUrl
