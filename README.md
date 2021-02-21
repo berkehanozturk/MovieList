@@ -14,7 +14,7 @@ Movie List app can support landScape mode  for users who loves using landScape.
 You can download  my app from https://github.com/berkehanozturk/MovieList/ 
 
 
-#Some Functions That I use 
+# Some Functions That I use 
 fetchPopularMovies():   fetching popular movies with page count from api and append the result to movie list
 isFavouriteMovie() : check for movie is favourite or not 
 setupCollectionViewLayout(isGrid: Bool) -> UICollectionViewCompositionalLayout :  setting up collection view's layout with parametre isGrid
