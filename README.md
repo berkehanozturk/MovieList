@@ -15,13 +15,13 @@ You can download  my app from https://github.com/berkehanozturk/MovieList/
 
 
 # Some Functions That I use 
-fetchPopularMovies():   fetching popular movies with page count from api and append the result to movie list
-isFavouriteMovie() : check for movie is favourite or not 
-setupCollectionViewLayout(isGrid: Bool) -> UICollectionViewCompositionalLayout :  setting up collection view's layout with parametre isGrid
-loadMore():  triggers when load more button is clicked. increase pageCount 1 and fetchpopular movies again
-search(searchText: String) :  search function gets searchbartext and search for fetched movies
-addIssueToFavourites(): add movie to favourite list  using user default
-removeFromFavourites(): remove favourites from favourite list
+1-fetchPopularMovies():   fetching popular movies with page count from api and append the result to movie list
+2-isFavouriteMovie() : check for movie is favourite or not 
+3-setupCollectionViewLayout(isGrid: Bool) -> UICollectionViewCompositionalLayout :  setting up collection view's layout with parametre isGrid
+4-loadMore():  triggers when load more button is clicked. increase pageCount 1 and fetchpopular movies again
+5-search(searchText: String) :  search function gets searchbartext and search for fetched movies
+6-addIssueToFavourites(): add movie to favourite list  using user default
+7-removeFromFavourites(): remove favourites from favourite list
 
 
 # 1-Network
