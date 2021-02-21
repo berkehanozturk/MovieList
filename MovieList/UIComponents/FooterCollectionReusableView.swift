@@ -6,16 +6,22 @@
 //
 
 import UIKit
+protocol HideHeaderViewDelegate {
+    func hideHeaderView()
+}
+class FooterCollectionReusableView: UICollectionReusableView {
+    var delegate: HideHeaderViewDelegate?
 
-class FooterCollectionReusableView: UICollectionReusableView,ReusableView {
     static let identifier = "FooterCollectionReusableView"
      let button: UIButton = {
         let button = UIButton()
         button.setTitle("LoadMore", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.clipsToBounds = true
+        button.addTarget(self, action: #selector(loadMore), for: .touchUpInside)
         return button
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(button)
@@ -26,6 +32,11 @@ class FooterCollectionReusableView: UICollectionReusableView,ReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         button.frame = bounds
+    }
+    @objc func loadMore(){
+        guard let delegate = delegate else { return }
+        delegate.hideHeaderView()
+
     }
 
 }

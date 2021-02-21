@@ -15,31 +15,36 @@ struct MovieModal: Codable {
   
 }
 
-struct Movie: Codable {
+struct Movie: Codable,Hashable {
     var title: String?
     var posterPath: URL?
     var voteCount: Int?
     var overView: String?
     var isFavourite: Bool?
     var id: Int?
+    var vote_average: Float?
+  
     enum CodingKeys: String, CodingKey  {
         case voteCount  = "vote_count"
         case id = "id"
         case posterPath = "poster_path"
         case title
         case overView = "overview"
+        case vote_average
     }
    
-    init(movieTitle: String?, movieImageUrl: URL?, movieVoteCount: Int?, movieOverView: String?, movieIsFavourite: Bool? = false,MovieId : Int?) {
+    init(movieTitle: String?, movieImageUrl: URL?, movieVoteCount: Int?, movieOverView: String?, movieIsFavourite: Bool? = false,MovieId : Int?,movieVoteAvarage: Float?) {
         title = movieTitle
         posterPath = movieImageUrl
         voteCount = movieVoteCount
         overView = movieOverView
         isFavourite = movieIsFavourite
         id = MovieId
+        vote_average = movieVoteAvarage
         
     }
   
+    // check for favourite movies   if is favourite return  true
     func isFavouriteMovie() -> Bool {
         var returnValue = false
         for movie in GlobalVariables.favouriteMovies{

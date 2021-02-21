@@ -130,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				6F27342725DD3EE600C7307B /* MovieList */,
-				6F27343E25DD3EE800C7307B /* MovieListTests */,
 				6F27344925DD3EE800C7307B /* MovieListUITests */,
 				6F27342625DD3EE600C7307B /* Products */,
 			);
@@ -153,15 +152,16 @@
 				6F2734C425DD75C900C7307B /* helpers */,
 				6F9BF74725DE69280006D9C7 /* Protocols */,
 				6F2734AD25DD558B00C7307B /* Extensions */,
+				6F27347325DD40BB00C7307B /* Resources */,
+				6F27347025DD407800C7307B /* Network */,
+				6F27347425DD40E100C7307B /* Constants */,
+				6F27347225DD409E00C7307B /* Modals */,
+				6F27346725DD400300C7307B /* ViewControllers */,
+				6F27345B25DD3FCF00C7307B /* StoryBoards */,
+				6F27343E25DD3EE800C7307B /* MovieListTests */,
 				6F27342825DD3EE600C7307B /* AppDelegate.swift */,
 				6F27342A25DD3EE600C7307B /* SceneDelegate.swift */,
 				6F27343125DD3EE800C7307B /* Assets.xcassets */,
-				6F27347425DD40E100C7307B /* Constants */,
-				6F27347225DD409E00C7307B /* Modals */,
-				6F27347025DD407800C7307B /* Network */,
-				6F27347325DD40BB00C7307B /* Resources */,
-				6F27346725DD400300C7307B /* ViewControllers */,
-				6F27345B25DD3FCF00C7307B /* StoryBoards */,
 				6F27343625DD3EE800C7307B /* Info.plist */,
 			);
 			path = MovieList;

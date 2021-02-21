@@ -40,7 +40,10 @@ class MyBarButtonItem : UIBarButtonItem {
     }
      func setButtonIcon(iconName: String) {
         let button = self.customView as! UIButton
-        button.setImage(UIImage(named: iconName), for: .normal)
+        DispatchQueue.main.async {
+            button.setImage(UIImage(named: iconName), for: .normal)
+
+        }
         self.customView = button
     }
     

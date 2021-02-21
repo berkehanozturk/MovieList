@@ -15,7 +15,10 @@ class MovieCell: UICollectionViewCell, NibLoadableView, ReusableView {
     @IBOutlet weak var containerViewForLabels: UIView!
     var movie: Movie? {
         didSet{
-            setData(movie: movie)
+            DispatchQueue.main.async {
+                self.setData(movie: self.movie)
+
+            }
         
         }
     }
@@ -42,14 +45,14 @@ class MovieCell: UICollectionViewCell, NibLoadableView, ReusableView {
         setupStars()
         movieImageView.layer.cornerRadius = 5
         containerViewForLabels.layer.cornerRadius = 5
-        prepareForReuse()
         movieTitleLabel.text = movie?.title
+
         if let movieImageUrl = movie?.posterPath {
             if   let fullPosterUrl =  GetPoster.getPosterUrl(width: 300, posterString: movieImageUrl){
                 movieImageView.setRemoteImage(from: fullPosterUrl)
-
-            }
         }
     }
     
 }
+}
+

@@ -22,11 +22,8 @@ class DetailViewController: BaseViewController {
         super.viewDidLoad()
         customizeNavbar()
         setupUI()
-        voteContainerView.layer.cornerRadius = 5
-        
-
     }
-
+/// this function is stup UIelements  for detail ViewController
     private func setupUI() {
         guard let selectedMovie = selectedMovie else { return }
         guard let selectedMoviePoster = selectedMovie.posterPath  else {return}
@@ -35,46 +32,37 @@ class DetailViewController: BaseViewController {
         }
         titleLabel.text = selectedMovie.title
         guard let selectedMovieVoteCount = selectedMovie.voteCount else { return  }
-        voteCountLabel.text = "Vote Count: \(selectedMovieVoteCount)"
+        guard let selectedMovieVoteAvarage = selectedMovie.vote_average else { return  }
+
+        voteCountLabel.text = "Votes: \(selectedMovieVoteCount) Avarage Vote : \(selectedMovieVoteAvarage) "
         descriptionLabel.text = selectedMovie.overView
      
         
     }
+    ///this function is customizingNavbar according to movie is favourite or not  and  user can  add movie to favourites
     private func customizeNavbar() {
         
         let rightButton  = MyBarButtonItem(buttonIconName: Assets.emptyStar.rawValue)
         if selectedMovie?.isFavourite == true {
-            DispatchQueue.main.async {
-                rightButton.setButtonIcon(iconName: Assets.filledStar.rawValue)
-
-            }
+            rightButton.setButtonIcon(iconName: Assets.filledStar.rawValue)
         }
-            else{
-                DispatchQueue.main.async {
-                    rightButton.setButtonIcon(iconName: Assets.emptyStar.rawValue)
-
-                }
-            }
+        else {
+            rightButton.setButtonIcon(iconName: Assets.emptyStar.rawValue)
+        }
         
         rightButton.setNavbarButtonAction {
             if self.selectedMovie?.isFavourite == false {
                 self.selectedMovie?.isFavourite?.toggle()
-
-                DispatchQueue.main.async {
-                    rightButton.setButtonIcon(iconName: Assets.filledStar.rawValue)
-                }
+                rightButton.setButtonIcon(iconName: Assets.filledStar.rawValue)
                 self.selectedMovie?.addIssueToFavourites()
-            }else {
-                self.selectedMovie?.isFavourite?.toggle()
-                DispatchQueue.main.async {
-                    rightButton.setButtonIcon(iconName: Assets.emptyStar.rawValue)
-                }
-                self.selectedMovie?.removeFromFavourites()
-
             }
-        
+            else {
+                self.selectedMovie?.isFavourite?.toggle()
+                rightButton.setButtonIcon(iconName: Assets.emptyStar.rawValue)
+                self.selectedMovie?.removeFromFavourites()
+            }
         }
         setupNavBar(right: rightButton)
     }
-   
+    
 }
