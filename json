@@ -1,0 +1,31 @@
+{
+  "project": "HRM",
+  "tabs": [
+    {
+      "tab_title": "Work",
+      "customfield": [
+        {
+          "key": "81324",
+          "title": "Department"
+        },
+        {
+          "key": "12352",
+          "title": "Expertise"
+        }
+      ]
+    },
+    {
+      "tab_title": "Dates",
+      "customfield": [
+        {
+          "key": "54657",
+          "title": "Work start date"
+        },
+        {
+          "key": "5656756",
+          "title": "Leave date"
+        }
+      ]
+    }
+  ]
+}
